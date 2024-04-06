@@ -1,6 +1,7 @@
 import 'package:client_control/models/client_type.dart';
 import 'package:client_control/models/client.dart';
 import 'package:client_control/models/clients.dart';
+import 'package:client_control/models/types.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -68,7 +69,8 @@ class _ClientsPageState extends State<ClientsPage> {
   void createType(context) {
     TextEditingController nomeInput = TextEditingController();
     TextEditingController emailInput = TextEditingController();
-    ClientType dropdownValue = types[0];
+    ClientsType listTypes = Provider.of<ClientsType>(context, listen: false);
+    ClientType dropdownValue = listTypes.types[0];
 
     showDialog(
         context: context,
@@ -114,7 +116,7 @@ class _ClientsPageState extends State<ClientsPage> {
                             dropdownValue = newValue as ClientType;
                           });
                         },
-                        items: types.map((ClientType type) {
+                        items: listTypes.types.map((ClientType type) {
                           return DropdownMenuItem<ClientType>(
                             value: type,
                             child: Text(type.name),
@@ -128,16 +130,14 @@ class _ClientsPageState extends State<ClientsPage> {
             ),
             actions: [
               Consumer<Clients>(builder:
-                  (BuildContext context, Clients list, Widget? widget) {
+                  (BuildContext context, Clients clients, Widget? widget) {
                 return TextButton(
                     child: const Text("Salvar"),
                     onPressed: () async {
-                      setState(() {
-                        list.clients.add(Client(
-                            name: nomeInput.text,
-                            email: emailInput.text,
-                            type: dropdownValue));
-                      });
+                      clients.add(Client(
+                          name: nomeInput.text,
+                          email: emailInput.text,
+                          type: dropdownValue));
                       Navigator.pop(context);
                     });
               }),
