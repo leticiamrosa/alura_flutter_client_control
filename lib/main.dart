@@ -15,8 +15,11 @@ class MyApp extends StatelessWidget {
       title: 'Controle de clientes',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.indigo,
-      ),
+          primarySwatch: Colors.indigo,
+          appBarTheme: const AppBarTheme(
+              backgroundColor: Colors.indigo,
+              titleTextStyle: TextStyle(color: Colors.white, fontSize: 24),
+              iconTheme: IconThemeData(color: Colors.white))),
       initialRoute: '/',
       routes: {
         '/': (context) => const ClientsPage(title: 'Clientes'),
